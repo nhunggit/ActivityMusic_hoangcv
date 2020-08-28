@@ -8,11 +8,13 @@
 
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/frame_Layout"
         android:layout_width="409dp"
         android:layout_height="729dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
