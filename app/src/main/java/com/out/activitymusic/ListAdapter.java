@@ -1,21 +1,25 @@
 package com.out.activitymusic;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
-    private LinkedList<String> mListView;
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
+    private ArrayList<MusicClass> mListView;
     private LayoutInflater mInflater;
 
-    public ListAdapter(Context context, LinkedList<String> ListView) {
+    public ListAdapter(Context context, ArrayList<MusicClass> ListView) {
         mInflater=LayoutInflater.from(context);
         this.mListView = ListView;
     }
@@ -30,8 +34,13 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String mCurrent =mListView.get(position);
-        holder.mListItemView.setText(mCurrent);
+        MusicClass mCurrent =mListView.get(position);
+//        String mCurrent1=mListSTT.get(position);
+        holder.mStt.setText((position+1)+"");
+        holder.mTitle.setText(mCurrent.getTitle());
+        Log.i("main",mCurrent.getTimeSong());
+        holder.mTime.setText(mCurrent.getTimeSong());
+//        holder.mListItemView2.setText(mCurrent1);
 
     }
 
@@ -40,33 +49,27 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
         return mListView.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public final TextView mListItemView;
+        public TextView mStt;
+        public TextView mTitle;
+        public TextView mTime;
         final ListAdapter mAdapter;
 
 
         public ViewHolder(@NonNull View itemView, ListAdapter adapter) {
             super(itemView);
             this.mAdapter = adapter;
-            mListItemView = itemView.findViewById(R.id.list_view);
-            itemView.setOnClickListener(this);
+            mStt = itemView.findViewById(R.id.STT);
+            mTitle = itemView.findViewById(R.id.music);
+            mTime = itemView.findViewById(R.id.tvTime);
+
+//            mListItemView2 = itemView.findViewById(R.id.STT);
+
 
         }
 
 
-        @Override
-        public void onClick(View v) {
-            int mPosition = getLayoutPosition();
-// Use that to access the affected item in mWordList.
-            String element = mListView.get(mPosition);
-// Change the word in the mWordList.
-            mListView.set(mPosition, "Clicked! " + element);
-// Notify the adapter, that the data has changed so it can
-// update the RecyclerView to display the data.
-            mAdapter.notifyDataSetChanged();
-        }
 
 
     }}
