@@ -5,16 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
 
     <FrameLayout
-        android:id="@+id/frame_Layout"
+        android:id="@+id/frame_Layout1"
         android:layout_width="409dp"
         android:layout_height="729dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical">
+
+
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/frame_Layout2"
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal">
 
 
     </FrameLayout>
