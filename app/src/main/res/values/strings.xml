@@ -5,4 +5,6 @@
     <string name="STT">1</string>
     <string name="music">Music1</string>
     <string name="time">5:34</string>
+    <string name="time_1">0:00</string>
+    <string name="time_2">0:00</string>
 </resources>

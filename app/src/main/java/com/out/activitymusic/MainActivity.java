@@ -36,8 +36,13 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         AllSongsFragment allSongsFragment=new AllSongsFragment();
-        fragmentTransaction.replace(R.id.frame_Layout,allSongsFragment);
+        fragmentTransaction.replace(R.id.frame_Layout1,allSongsFragment);
         fragmentTransaction.commit();
+        FragmentManager fragmentManager1=getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction1=fragmentManager1.beginTransaction();
+        MediaPlaybackFragment mediaPlaybackFragment= new MediaPlaybackFragment();
+        fragmentTransaction1.replace(R.id.frame_Layout2,mediaPlaybackFragment);
+        fragmentTransaction1.commit();
 
 
 
