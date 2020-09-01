@@ -1,4 +1,5 @@
 package com.out.activitymusic;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,31 +17,43 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 public class AllSongsFragment extends Fragment {
-    private ListAdapter mListAdapter1;
+    private ListAdapter mListAdapter;
 
-    private RecyclerView mRecyclerView1;
+    private RecyclerView mRecyclerView;
 
     private ArrayList<MusicClass> arrayList;
     View mInflater;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mInflater=inflater.inflate(R.layout.allsongsfragment,container,false);
-        mRecyclerView1=mInflater.findViewById(R.id.recycle_view);
-        mRecyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView=mInflater.findViewById(R.id.recycle_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         arrayList = Music.setListMusic();
 
-        mListAdapter1 = new ListAdapter(getContext(),arrayList);
+        mListAdapter = new ListAdapter(getContext(),arrayList);
 
-        mRecyclerView1.setAdapter(mListAdapter1);
+        mRecyclerView.setAdapter(mListAdapter);
 
 
         return mInflater;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
+
+    public interface itemSelected {
+    }
+}
 
 
 

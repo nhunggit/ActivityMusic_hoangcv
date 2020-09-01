@@ -1,5 +1,6 @@
 package com.out.activitymusic;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,11 @@ public class MediaPlaybackFragment extends Fragment {
 
     public static MediaPlaybackFragment newInstance(String content) {
         return MediaPlaybackFragment.newInstance(content);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
     }
 
     @Nullable

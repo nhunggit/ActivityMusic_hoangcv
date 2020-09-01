@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,12 +16,14 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private ArrayList<MusicClass> mListView;
     private LayoutInflater mInflater;
+    private LinearLayout playMediaSong;
+
 
     public ListAdapter(Context context, ArrayList<MusicClass> ListView) {
-        mInflater=LayoutInflater.from(context);
+        mInflater = LayoutInflater.from(context);
         this.mListView = ListView;
     }
 
@@ -28,18 +31,26 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View mItemView = mInflater.inflate(R.layout.list_view, parent, false);
-        return new ViewHolder(mItemView,this);
+        return new ViewHolder(mItemView, this);
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MusicClass mCurrent =mListView.get(position);
+        final MusicClass mCurrent = mListView.get(position);
 //        String mCurrent1=mListSTT.get(position);
-        holder.mStt.setText((position+1)+"");
+        holder.mStt.setText((position + 1) + "");
         holder.mTitle.setText(mCurrent.getTitle());
-        Log.i("main",mCurrent.getTimeSong());
+        Log.i("main", mCurrent.getTimeSong());
         holder.mTime.setText(mCurrent.getTimeSong());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                playMediaSong.findViewById(R.id.playMedia).setVisibility(View.VISIBLE);
+            }
+
+
+        });
 //        holder.mListItemView2.setText(mCurrent1);
 
     }
@@ -69,10 +80,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
 
         }
 
+    }
 
-
-
-    }}
+}
 
 
 
