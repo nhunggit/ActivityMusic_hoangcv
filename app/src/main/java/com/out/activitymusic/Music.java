@@ -3,15 +3,17 @@ package com.out.activitymusic;
 import java.util.ArrayList;
 
 public class Music {
-    MusicClass musicClass;
-    public ArrayList<MusicClass> arrayList = new ArrayList<>();
-    public static ArrayList<MusicClass> setListMusic(){
-        ArrayList<MusicClass> arrayList = new ArrayList<>();
-        arrayList.add(new MusicClass("track1","3:50"));
-        arrayList.add(new MusicClass("track2","4:35"));
-        arrayList.add(new MusicClass("track3","1:12"));
-        arrayList.add(new MusicClass("track3","9:45"));
-        arrayList.add(new MusicClass("track3","10:23"));
+    Song song;
+    public ArrayList<Song> arrayList = new ArrayList<>();
+    public static ArrayList<Song> setListMusic(){
+        ArrayList<Song> arrayList = new ArrayList<>();
+        arrayList.add(new Song(1,"music1","src1","picture1",1));
+        arrayList.add(new Song(2,"music1","src1","picture1",2));
+        arrayList.add(new Song(3,"music1","src1","picture1",3));
+        arrayList.add(new Song(1,"music1","src1","picture1",3));
+        arrayList.add(new Song(1,"music1","src1","picture1",2));
+        arrayList.add(new Song(1,"music1","src1","picture1",3));
+
         return arrayList;
     }
 

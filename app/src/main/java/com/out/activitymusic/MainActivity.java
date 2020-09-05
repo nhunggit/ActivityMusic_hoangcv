@@ -20,7 +20,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class MainActivity extends AppCompatActivity implements AllSongsFragment.itemSelected {
+public class MainActivity extends AppCompatActivity {
 
 
     @Override

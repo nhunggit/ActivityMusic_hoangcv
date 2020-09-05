@@ -15,65 +15,91 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+class RecyclerViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
+    public TextView music;
+    private ItemClickListener itemClickListener;
+    public RecyclerViewHolder(@NonNull View itemView) {
+        super(itemView);
+        music = (TextView)itemView.findViewById(R.id.music);
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
-    private ArrayList<MusicClass> mListView;
+        itemView.setOnClickListener(this);
+        itemView.setOnLongClickListener(this);
+    }
+
+    public void setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        itemClickListener.onClick(view,getAdapterPosition(),false);
+
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        itemClickListener.onClick(view,getAdapterPosition(),true);
+        return true;
+    }
+}
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
+    private ArrayList<Song> mListSong;
+   // private Context context;
     private LayoutInflater mInflater;
-    private LinearLayout playMediaSong;
+    private View playMediaSong;
+    LinearLayout mLinearLayout;
+    AllSongsFragment allSongsFragment;
 
 
-    public ListAdapter(Context context, ArrayList<MusicClass> ListView) {
+
+    public ListAdapter(Context context, ArrayList<Song> ListView) {
         mInflater = LayoutInflater.from(context);
-        this.mListView = ListView;
+        this.mListSong = ListView;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View mItemView = mInflater.inflate(R.layout.list_view, parent, false);
+         playMediaSong=mInflater.inflate(R.layout.allsongsfragment,parent,false);
+         mLinearLayout=playMediaSong.findViewById(R.id.playMedia);
+         allSongsFragment=new AllSongsFragment();
         return new ViewHolder(mItemView, this);
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final MusicClass mCurrent = mListView.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        final Song mCurrent = mListSong.get(position);
 //        String mCurrent1=mListSTT.get(position);
-        holder.mStt.setText((position + 1) + "");
+        holder.mId.setText((position + 1) + "");
         holder.mTitle.setText(mCurrent.getTitle());
-        Log.i("main", mCurrent.getTimeSong());
-        holder.mTime.setText(mCurrent.getTimeSong());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                playMediaSong.findViewById(R.id.playMedia).setVisibility(View.VISIBLE);
-            }
+        holder.mDuration.setText(mCurrent.getDuration()+"");
 
 
-        });
-//        holder.mListItemView2.setText(mCurrent1);
 
     }
 
     @Override
     public int getItemCount() {
-        return mListView.size();
+        return mListSong.size();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView mStt;
+        public TextView mId;
         public TextView mTitle;
-        public TextView mTime;
+        public TextView mDuration;
         final ListAdapter mAdapter;
 
 
         public ViewHolder(@NonNull View itemView, ListAdapter adapter) {
             super(itemView);
             this.mAdapter = adapter;
-            mStt = itemView.findViewById(R.id.STT);
+            mId = itemView.findViewById(R.id.STT);
             mTitle = itemView.findViewById(R.id.music);
-            mTime = itemView.findViewById(R.id.tvTime);
+            mDuration = itemView.findViewById(R.id.tvTime);
 
 //            mListItemView2 = itemView.findViewById(R.id.STT);
 
@@ -81,8 +107,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         }
 
     }
-
 }
-
 
 
