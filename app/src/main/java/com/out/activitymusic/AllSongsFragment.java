@@ -29,7 +29,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-    private static final String SHARED_PREFERENCES_NAME = "Hoang";
+    private static final String SHARED_PREFERENCES_NAME = "1";
     private ListAdapter mListAdapter;
 
     private RecyclerView mRecyclerView;
