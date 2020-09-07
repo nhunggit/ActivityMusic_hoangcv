@@ -37,6 +37,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     private ArrayList<Song> arrayList;
     private LinearLayout mLinearLayout;
     private SharedPreferences mSharePreferences;
+    ArrayList<Song> songs;
 
     /*   public boolean isIsplaying() {
            return isplaying;
@@ -60,14 +61,8 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         View mInflater = inflater.inflate(R.layout.allsongsfragment, container, false);
         mRecyclerView = mInflater.findViewById(R.id.recycle_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        arrayList = Music.setListMusic();
-
-        mListAdapter = new ListAdapter(getContext(), arrayList);
-
-        mRecyclerView.setAdapter(mListAdapter);
         mLinearLayout = mInflater.findViewById(R.id.playMedia);
-
+        LoaderManager.getInstance(this).initLoader(1, null, this);
         return mInflater;
     }
 
@@ -79,6 +74,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        Log.d("nhungltk", "onCreateLoader: ");
         String[] projection = {MediaStore.Audio.Media._ID,
                 MediaStore.Audio.Media.ARTIST,
                 MediaStore.Audio.Media.TITLE,
@@ -92,8 +88,9 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+        Log.d("nhungltk", "onLoadFinished: ");
         mSharePreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-        ArrayList<Song> songs = new ArrayList<>();
+        songs = new ArrayList<>();
         boolean isCreate = mSharePreferences.getBoolean("create_db", false);
         int id = 0;
         String title = "";
@@ -106,7 +103,8 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
             while (data.moveToNext()) {
                 id++;
                 song.setId(id);
-                Song.setTitle(data.getString(data.getColumnIndex(MediaStore.Audio.Media.TITLE)));
+               // Song.setTitle(data.getString(data.getColumnIndex(MediaStore.Audio.Media.TITLE)));
+                Song.setTitle(data.getString(data.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)));
                 song.setFile(data.getString(data.getColumnIndex(MediaStore.Audio.Media.DATA)));
                 song.setArtist(data.getString(data.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
                 song.setDuration(data.getInt(data.getColumnIndex(MediaStore.Audio.Media.DURATION)));
@@ -114,7 +112,9 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
                 file = song.getFile();
                 artist = song.getArtist();
                 duration = song.getDuration();
-                songs.add(new Song(id, title, file, artist, duration));
+                songs.add(new Song(id,title,file,artist,duration));
+                Log.d("nhungltk", "onLoadFinished: "+title);
+                Log.d("nhungltk", "onLoadFinished: "+duration);
                /* if (isCreate == false) {
                     ContentValues values = new ContentValues();
                     values.put(FavoriteSongsProvider.ID_PROVIDER, id);
@@ -127,8 +127,14 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
                     editor.commit();
                 }*/
             }
-
         }
+        Log.d("nhungltk", "onLoadFinished: "+songs.size());
+        mListAdapter = new ListAdapter(getContext(), songs);
+        mRecyclerView.setAdapter(mListAdapter);
+
+
+
+
 
 
 

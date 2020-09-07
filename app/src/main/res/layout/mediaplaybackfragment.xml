@@ -38,11 +38,10 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="33dp"
-            android:layout_height="30dp"
+            android:layout_width="40sp"
+            android:layout_height="30sp"
             android:layout_marginVertical="30sp"
-            app:srcCompat="@drawable/ic_dau3cham" />
-
+            app:srcCompat="@drawable/ic_more_vert" />
 
     </LinearLayout>
 
@@ -61,7 +60,7 @@
             android:id="@+id/imageView6"
             android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="335sp"
+            android:layout_marginLeft="320sp"
             app:srcCompat="@drawable/ic_shuffle_dark" />
 
     </LinearLayout>
@@ -105,7 +104,8 @@
             android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="1sp"
-            app:srcCompat="@drawable/ic_thumbs_up_default" />
+            app:srcCompat="@drawable/ic_thumbs_up_default"
+            android:contentDescription="TODO" />
 
         <ImageView
             android:id="@+id/imageView10"

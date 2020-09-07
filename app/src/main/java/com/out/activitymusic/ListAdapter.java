@@ -14,17 +14,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 class RecyclerViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
     public TextView music;
     private ItemClickListener itemClickListener;
+    LinearLayout clickItem;
     public RecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
-        music = (TextView)itemView.findViewById(R.id.music);
+        clickItem = (LinearLayout) itemView.findViewById(R.id.clickItem);
 
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
     }
+
+
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
@@ -57,6 +61,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
         this.mListSong = ListView;
     }
 
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -75,6 +80,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
         holder.mId.setText((position + 1) + "");
         holder.mTitle.setText(mCurrent.getTitle());
         holder.mDuration.setText(mCurrent.getDuration()+"");
+
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+                MediaPlaybackFragment mediaPlaybackFragment = new MediaPlaybackFragment();
+                FragmentManager manager1 = this.getSupportFragmentManager();
+
+                manager1.beginTransaction()
+                        .replace(R.id.fragmentMediaTwo, mediaPlaybackFragment)
+
+                        .commit();
+            }
+        });
+
 
 
 
@@ -106,6 +125,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
 
         }
 
+        public void setItemClickListener(ItemClickListener itemClickListener) {
+        }
     }
 }
 

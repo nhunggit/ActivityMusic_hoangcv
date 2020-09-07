@@ -19,12 +19,13 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
+        android:id="@+id/clickItem"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/music"
-            android:layout_width="250sp"
+            android:layout_width="280sp"
             android:layout_height="35sp"
             android:padding="5sp"
             android:text="@string/music"
@@ -32,19 +33,20 @@
 
         <TextView
             android:id="@+id/tvTime"
-            android:layout_width="250sp"
+            android:layout_width="280sp"
             android:layout_height="35sp"
             android:padding="5sp"
             android:text="@string/time"
             android:textSize="18sp"></TextView>
+
     </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="60sp"
+        android:layout_width="40sp"
         android:layout_height="70sp"
 
-        app:srcCompat="@drawable/ic_dau3cham" />
+        app:srcCompat="@drawable/ic_more_vert" />
 
     </LinearLayout>
 
