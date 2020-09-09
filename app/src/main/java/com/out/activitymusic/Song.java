@@ -1,37 +1,40 @@
 package com.out.activitymusic;
 
+
 public class Song {
 
     private int ID;
-    private static String Title;
+    private String Title;
     private String File;
-    private  String Artist;
-    private int Duration;
+    private String Artist;
+    private String Duration;
+    private String Album;
 
 
+
+    public Song(int ID, String title, String file, String album, String artist, String duration) {
+        this.ID = ID;
+        Title = title;
+        File = file;
+        Artist = artist;
+        Duration = duration;
+        Album=album;
+    }
 
     public int getID() {
         return ID;
     }
 
-    public String getArtist() {
-        return Artist;
-    }
-
-    public void setArtist(String artist) {
-        Artist = artist;
-    }
-
-    public void setId(int ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
-    public int getDuration() {
-        return Duration;
+    public String getTitle() {
+        return Title;
     }
 
-    public void setDuration(int duration) {
-        Duration = duration;
+    public void setTitle(String title) {
+        Title = title;
     }
 
     public String getFile() {
@@ -42,22 +45,29 @@ public class Song {
         File = file;
     }
 
-    public String getTitle() {
-        return Title;
+    public String getArtist() {
+        return Artist;
     }
 
-    public static void setTitle(String title) {
-        Title = title;
+    public void setArtist(String artist) {
+        Artist = artist;
     }
 
-    public Song(int ID, String Title , String File , String Artist, int Duration){
-        this.ID= ID;
-        this.Title= Title;
-        this.File= File;
-        this.Artist= Artist;
-        this.Duration= Duration;
+    public String getDuration() {
+        return Duration;
+    }
 
-        }
+    public void setDuration(String duration) {
+        Duration = duration;
+    }
+
+    public String getAlbum() {
+        return Album;
+    }
+
+    public void setAlbum(String album) {
+        Album = album;
+    }
 }
 
 

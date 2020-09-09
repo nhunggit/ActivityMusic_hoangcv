@@ -1,6 +1,7 @@
 package com.out.activitymusic;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,13 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
-class RecyclerViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
+
+import javax.xml.datatype.Duration;
+/*class RecyclerViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
     public TextView music;
     private ItemClickListener itemClickListener;
     LinearLayout clickItem;
+
     public RecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
         clickItem = (LinearLayout) itemView.findViewById(R.id.clickItem);
@@ -29,35 +33,38 @@ class RecyclerViewHolder extends  RecyclerView.ViewHolder implements View.OnClic
     }
 
 
-
-    public void setItemClickListener(ItemClickListener itemClickListener) {
+    public void setOnClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
     @Override
     public void onClick(View view) {
-        itemClickListener.onClick(view,getAdapterPosition(),false);
+        itemClickListener.onClick(view, getAdapterPosition(), false);
 
     }
 
     @Override
     public boolean onLongClick(View view) {
-        itemClickListener.onClick(view,getAdapterPosition(),true);
+        itemClickListener.onClick(view, getAdapterPosition(), true);
         return true;
-    }
-}
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
+    }*/
+
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private ArrayList<Song> mListSong;
-   // private Context context;
+    // private Context context;
     private LayoutInflater mInflater;
     private View playMediaSong;
     LinearLayout mLinearLayout;
     AllSongsFragment allSongsFragment;
+    private Object Context;
+    private ItemClickListener listener;
+    private ListAdapter mListAdapter;
+    private RecyclerView mRecyclerView;
+    ArrayList<Song> songs;
 
-
-
-    public ListAdapter(Context context, ArrayList<Song> ListView) {
+    public ListAdapter(Context context, ArrayList<Song> ListView,ItemClickListener itemClickListener) {
         mInflater = LayoutInflater.from(context);
+        this.listener = itemClickListener;
         this.mListSong = ListView;
     }
 
@@ -66,37 +73,42 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View mItemView = mInflater.inflate(R.layout.list_view, parent, false);
-         playMediaSong=mInflater.inflate(R.layout.allsongsfragment,parent,false);
-         mLinearLayout=playMediaSong.findViewById(R.id.playMedia);
-         allSongsFragment=new AllSongsFragment();
+        playMediaSong = mInflater.inflate(R.layout.allsongsfragment, parent, false);
+        mLinearLayout = playMediaSong.findViewById(R.id.playMedia);
+        allSongsFragment = new AllSongsFragment();
         return new ViewHolder(mItemView, this);
 
     }
 
+
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+
+
         final Song mCurrent = mListSong.get(position);
+
+
 //        String mCurrent1=mListSTT.get(position);
         holder.mId.setText((position + 1) + "");
         holder.mTitle.setText(mCurrent.getTitle());
-        holder.mDuration.setText(mCurrent.getDuration()+"");
+        holder.mDuration.setText(getDurationTime(mCurrent.getDuration()));
+        Log.d("HoangCV", "onBindViewHolder: " + mCurrent.getTitle());
 
-        holder.setItemClickListener(new ItemClickListener() {
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view, int position, boolean isLongClick) {
-                MediaPlaybackFragment mediaPlaybackFragment = new MediaPlaybackFragment();
-                FragmentManager manager1 = this.getSupportFragmentManager();
-
-                manager1.beginTransaction()
-                        .replace(R.id.fragmentMediaTwo, mediaPlaybackFragment)
-
-                        .commit();
+            public void onClick(View v) {
+                listener.onClick(mCurrent);
             }
         });
+    }
 
-
-
-
+    private String getDurationTime(String str) {
+        int mili = Integer.parseInt(str) / 1000;
+        int phut = mili / 60;
+        int giay = mili % 60;
+        String duration = String.valueOf(phut) + ":" + String.valueOf(giay);
+        return duration;
     }
 
     @Override
@@ -120,14 +132,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
             mTitle = itemView.findViewById(R.id.music);
             mDuration = itemView.findViewById(R.id.tvTime);
 
-//            mListItemView2 = itemView.findViewById(R.id.STT);
-
 
         }
 
-        public void setItemClickListener(ItemClickListener itemClickListener) {
-        }
+
     }
+
 }
 
 

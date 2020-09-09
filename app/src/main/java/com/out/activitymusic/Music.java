@@ -18,7 +18,6 @@ public class Music {
             arrayList.add(song);
 
         }
-        Log.d("nhungltk", "setListMusic: "+arrayList.size());
         return arrayList;
     }
 
