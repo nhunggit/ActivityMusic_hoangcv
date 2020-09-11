@@ -1,10 +1,9 @@
 package com.out.activitymusic;
 
 import android.content.ContentUris;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,12 +20,13 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import Service.ServiceMediaPlay;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -44,7 +44,10 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     ImageView img;
     private SharedPreferences mSharePreferences;
     ArrayList<Song> songs;
-
+    ServiceMediaPlay serviceMediaPlay;
+    public void setService(ServiceMediaPlay service){
+            this.serviceMediaPlay=service;
+    }
     /*   public boolean isIsplaying() {
            return isplaying;
        }
@@ -109,7 +112,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         boolean isCreate = mSharePreferences.getBoolean("create_db", false);
         int id = 0;
         String title = "";
-        String file = "";
+        Long file = null;
         String album="";
         String artist = "";
         String duration = "";
@@ -120,7 +123,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
                 id++;
                 song.setID(id);
                 song.setTitle(data.getString(data.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)));
-                song.setFile(data.getString(data.getColumnIndex(MediaStore.Audio.Media.DATA)));
+                song.setFile(data.getLong(data.getColumnIndex(MediaStore.Audio.Media.DATA)));
                 song.setAlbum(data.getString(data.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
                 song.setArtist(data.getString(data.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
                 song.setDuration(data.getString(data.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)));
@@ -132,6 +135,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
                 songs.add(new Song(id, title, file,album, artist, duration));
                 Log.d("nhungltk", "onLoadFinished: " + title);
                 Log.d("nhungltk", "onLoadFinished: " + duration);
+                Log.d("Hoang1","onLoad"+file);
 
                /* if (isCreate == false) {
                     ContentValues values = new ContentValues();
@@ -149,8 +153,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         mListAdapter = new ListAdapter(getContext(), songs, this);
         mRecyclerView.setAdapter(mListAdapter);
         Log.d("nhungltk", "onLoadFinished: " + songs.size());
-
-
+        mListAdapter.setService(serviceMediaPlay);
     }
 
     @Override
@@ -166,6 +169,8 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         title.setText(song.getTitle());
         artist.setText(song.getArtist());
         img.setImageURI(queryAlbumUri(song.getAlbum()));
+
+
    }
     public Uri queryAlbumUri(String imgUri) {
 

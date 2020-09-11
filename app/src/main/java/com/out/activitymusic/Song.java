@@ -5,14 +5,14 @@ public class Song {
 
     private int ID;
     private String Title;
-    private String File;
+    private Long File;
     private String Artist;
     private String Duration;
     private String Album;
 
 
 
-    public Song(int ID, String title, String file, String album, String artist, String duration) {
+    public Song(int ID, String title, Long file, String album, String artist, String duration) {
         this.ID = ID;
         Title = title;
         File = file;
@@ -37,11 +37,11 @@ public class Song {
         Title = title;
     }
 
-    public String getFile() {
+    public long getFile() {
         return File;
     }
 
-    public void setFile(String file) {
+    public void setFile(Long file) {
         File = file;
     }
 

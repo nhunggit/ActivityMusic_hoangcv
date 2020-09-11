@@ -1,5 +1,6 @@
 package com.out.activitymusic;
 
+import android.app.Service;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
@@ -10,15 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import javax.xml.datatype.Duration;
+
+import Service.ServiceMediaPlay;
 /*class RecyclerViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
     public TextView music;
     private ItemClickListener itemClickListener;
@@ -60,6 +63,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private ItemClickListener listener;
     private ListAdapter mListAdapter;
     private RecyclerView mRecyclerView;
+    private ServiceMediaPlay serviceMediaPlay;
     ArrayList<Song> songs;
 
     public ListAdapter(Context context, ArrayList<Song> ListView,ItemClickListener itemClickListener) {
@@ -67,7 +71,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         this.listener = itemClickListener;
         this.mListSong = ListView;
     }
-
+    public void setService(ServiceMediaPlay service){
+        this.serviceMediaPlay=service;
+    }
 
     @NonNull
     @Override
@@ -76,9 +82,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         playMediaSong = mInflater.inflate(R.layout.allsongsfragment, parent, false);
         mLinearLayout = playMediaSong.findViewById(R.id.playMedia);
         allSongsFragment = new AllSongsFragment();
+
         return new ViewHolder(mItemView, this);
 
     }
+
 
 
     @Override
@@ -99,6 +107,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 listener.onClick(mCurrent);
+                try {
+                    serviceMediaPlay.pause(mCurrent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
