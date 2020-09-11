@@ -1,109 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15sp"
-    android:background="@color/colorPrimary">
+    android:background="#64D16B">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/op"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_height="80dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="120sp"
+            android:layout_width="85dp"
             android:layout_height="match_parent"
-            android:layout_margin="8sp"
-            android:layout_weight="1"
+
             app:srcCompat="@drawable/ic_launcher_foreground" />
 
 
         <TextView
             android:id="@+id/song1"
-            android:layout_width="220dp"
-            android:layout_height="74dp"
-            android:layout_margin="8sp"
+            android:layout_width="214dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/imageView2"
             android:text="TextView" />
+
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="32dp"
-            android:layout_height="30dp"
-            android:layout_marginVertical="30sp"
+            android:layout_height="50dp"
+            android:layout_marginVertical="20sp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/imageView4"
+            android:layout_toRightOf="@+id/song1"
             app:srcCompat="@drawable/ic_queue_dark" />
-
 
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="40sp"
-            android:layout_height="30sp"
-            android:layout_marginVertical="30sp"
+            android:layout_height="50sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginVertical="20sp"
+            android:layout_marginEnd="2dp"
             app:srcCompat="@drawable/ic_more_vert" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="490sp"
+        android:layout_height="28dp"
+        android:layout_above="@+id/seekBar"
+        android:layout_marginBottom="1dp"
         android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/imageView5"
-            android:layout_width="29dp"
-            android:layout_height="26dp"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
             app:srcCompat="@drawable/ic_repeat_dark" />
 
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="320sp"
+            android:layout_alignParentRight="true"
             app:srcCompat="@drawable/ic_shuffle_dark" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <SeekBar
         android:id="@+id/seekBar"
+        android:layout_above="@+id/ll_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/ll_time"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_marginBottom="-1dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/time_1">
-
-        </TextView>
+            android:text="@string/time_1"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="335sp"
+            android:layout_alignParentRight="true"
             android:text="@string/time_2">
 
         </TextView>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageView7"
             android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="1sp"
             app:srcCompat="@drawable/ic_thumbs_up_default"
             android:contentDescription="TODO" />
 
@@ -111,32 +123,49 @@
             android:id="@+id/imageView10"
             android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="70sp"
+            android:layout_alignStart="@+id/imageView8"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="-56dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_toRightOf="@+id/imageView7"
             app:srcCompat="@drawable/ic_rew_dark" />
 
         <ImageView
             android:id="@+id/imageView8"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="30sp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="166dp"
+            android:layout_marginEnd="166dp"
+            android:layout_marginBottom="-5dp"
             app:srcCompat="@drawable/ic_pause_black_large" />
+
 
         <ImageView
             android:id="@+id/imageView11"
             android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="30sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="-2dp"
+            android:layout_marginRight="79dp"
+            android:layout_marginBottom="2dp"
+            android:layout_toLeftOf="@+id/imageView9"
             app:srcCompat="@drawable/ic_fwd_dark" />
-
 
         <ImageView
             android:id="@+id/imageView9"
             android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="80sp"
+            android:layout_alignParentRight="true"
             app:srcCompat="@drawable/ic_thumbs_down_default" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

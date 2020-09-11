@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity  {
 
             manager.beginTransaction()
                     .replace(R.id.fragmentSongOne, allSongsFragment)
-
                     .commit();
         } else {
             AllSongsFragment allSongsFragment = new AllSongsFragment();
@@ -46,8 +45,8 @@ public class MainActivity extends AppCompatActivity  {
 
             manager.beginTransaction()
                     .replace(R.id.fragmentSongOne, allSongsFragment)
-
                     .commit();
+
             MediaPlaybackFragment mediaPlaybackFragment = new MediaPlaybackFragment();
             FragmentManager manager1 = this.getSupportFragmentManager();
 

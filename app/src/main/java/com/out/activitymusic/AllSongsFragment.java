@@ -174,11 +174,6 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
 
-/*
-    @Override
-public void onSaveInstanceState(@NonNull Bundle outState) {
-    super.onSaveInstanceState(outState);
-}*/
 
     
 }
