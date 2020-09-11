@@ -49,8 +49,6 @@
             android:layout_marginVertical="20sp"
             android:layout_marginEnd="2dp"
             app:srcCompat="@drawable/ic_more_vert" />
-
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -99,7 +97,6 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:text="@string/time_2">
-
         </TextView>
 
 
@@ -145,7 +142,6 @@
             android:layout_marginEnd="166dp"
             android:layout_marginBottom="-5dp"
             app:srcCompat="@drawable/ic_pause_black_large" />
-
 
         <ImageView
             android:id="@+id/imageView11"
