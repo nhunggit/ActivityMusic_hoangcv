@@ -1,18 +1,20 @@
 package com.out.activitymusic;
 
 
-public class Song {
+import java.io.Serializable;
+
+public class Song implements Serializable {
 
     private int ID;
     private String Title;
-    private Long File;
+    private String File;
     private String Artist;
     private String Duration;
     private String Album;
 
 
 
-    public Song(int ID, String title, Long file, String album, String artist, String duration) {
+    public Song(int ID, String title, String file, String album, String artist, String duration) {
         this.ID = ID;
         Title = title;
         File = file;
@@ -37,11 +39,11 @@ public class Song {
         Title = title;
     }
 
-    public long getFile() {
+    public String getFile() {
         return File;
     }
 
-    public void setFile(Long file) {
+    public void setFile(String file) {
         File = file;
     }
 

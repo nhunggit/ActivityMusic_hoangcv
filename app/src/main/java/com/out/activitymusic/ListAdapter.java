@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,10 +56,9 @@ import Service.ServiceMediaPlay;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private ArrayList<Song> mListSong;
-    // private Context context;
     private LayoutInflater mInflater;
     private View playMediaSong;
-    LinearLayout mLinearLayout;
+    RelativeLayout mLinearLayout;
     AllSongsFragment allSongsFragment;
     private Object Context;
     private ItemClickListener listener;
@@ -80,14 +81,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View mItemView = mInflater.inflate(R.layout.list_view, parent, false);
         playMediaSong = mInflater.inflate(R.layout.allsongsfragment, parent, false);
-        mLinearLayout = playMediaSong.findViewById(R.id.playMedia);
+        mLinearLayout = playMediaSong.findViewById(R.id.bottom);
         allSongsFragment = new AllSongsFragment();
-
         return new ViewHolder(mItemView, this);
 
     }
-
-
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
@@ -107,13 +105,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 listener.onClick(mCurrent);
-                try {
-                    serviceMediaPlay.pause(mCurrent);
+              /*  try {
+                    serviceMediaPlay.start(mCurrent);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
         });
+    }
+
+    public interface onClick{
+        void onClick();
     }
 
     private String getDurationTime(String str) {

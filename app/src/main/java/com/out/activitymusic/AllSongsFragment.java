@@ -13,12 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
@@ -38,7 +40,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     private RecyclerView mRecyclerView;
 
     private ArrayList<Song> arrayList;
-    private LinearLayout mLinearLayout;
+    private RelativeLayout mLinearLayout,mBottom;
     TextView title;
     TextView artist;
     ImageView img;
@@ -71,7 +73,8 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         View mInflater = inflater.inflate(R.layout.allsongsfragment, container, false);
         mRecyclerView = mInflater.findViewById(R.id.recycle_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mLinearLayout = mInflater.findViewById(R.id.playMedia);
+        mLinearLayout = mInflater.findViewById(R.id.bottom);
+
         LoaderManager.getInstance(this).initLoader(1, null, this);
         title = mInflater.findViewById(R.id.title);
         artist = mInflater.findViewById(R.id.artist);
@@ -112,7 +115,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         boolean isCreate = mSharePreferences.getBoolean("create_db", false);
         int id = 0;
         String title = "";
-        Long file = null;
+        String file = "";
         String album="";
         String artist = "";
         String duration = "";
@@ -123,7 +126,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
                 id++;
                 song.setID(id);
                 song.setTitle(data.getString(data.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)));
-                song.setFile(data.getLong(data.getColumnIndex(MediaStore.Audio.Media.DATA)));
+                song.setFile(data.getString(data.getColumnIndex(MediaStore.Audio.Media.DATA)));
                 song.setAlbum(data.getString(data.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
                 song.setArtist(data.getString(data.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
                 song.setDuration(data.getString(data.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)));
@@ -163,6 +166,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onClick(Song song) {
+        Log.d("HoangCV", "onClick: 123");
         if (mLinearLayout.getVisibility() == View.GONE) {
             mLinearLayout.setVisibility(View.VISIBLE);
         }
