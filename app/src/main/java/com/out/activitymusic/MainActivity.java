@@ -119,8 +119,6 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
                     .commit();
         }
 
-//play the first audio in the ArrayList
-
 
 
     /*    Intent intent= new Intent(this, ServiceMediaPlay.class);
@@ -128,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         if(savedInstanceState!=null) {
             allSongsFragment.setService((ServiceMediaPlay) serviceConection);*/
         }
-
 
 
     @Override
@@ -149,21 +146,6 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
     public void onClick(Song song) {
 
     }
-
-    //   @Override
-/*    public void onClick(View view) {
-        Intent intent= new Intent(this, ServiceMediaPlay.class);
-        Log.d("hoangCv","khoitao");
-        switch (view.getId()){
-            case R.id.playMedia:
-                startService(intent);
-                break;
-            case R.id.play_pause:
-                onDestroy();
-        }
-    }*/
-
-
 
 
 
