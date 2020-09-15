@@ -1,5 +1,5 @@
 package com.out.activitymusic;
 
 public interface DisplayMediaFragment {
-    void onclick();
+    void onclick(Song song);
 }

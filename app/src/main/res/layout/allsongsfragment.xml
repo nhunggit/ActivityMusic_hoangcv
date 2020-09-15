@@ -16,7 +16,7 @@
             android:id="@+id/bottom"
             android:layout_width="match_parent"
             android:layout_height="70sp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_alignParentBottom="true"
             android:onClick="onclickBottom">
                 <ImageView

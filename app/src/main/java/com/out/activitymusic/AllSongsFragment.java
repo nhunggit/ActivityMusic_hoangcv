@@ -37,7 +37,7 @@ import Service.ServiceMediaPlay;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, ItemClickListener/*, PopupMenu.OnMenuItemClickListener*/ {
+public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, ItemClickListener,DataFragment/*, PopupMenu.OnMenuItemClickListener*/ {
     private static final String SHARED_PREFERENCES_NAME = "1";
     private ListAdapter mListAdapter;
 
@@ -45,14 +45,14 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
 private Song song;
     private ArrayList<Song> arrayList;
     private RelativeLayout mLinearLayout,mBottom;
-    TextView title;
+    TextView title,mTitle,mTime;
     TextView artist;
-    ImageView img;
+    ImageView img,mImageSmall;
     private SharedPreferences mSharePreferences;
     ArrayList<Song> songs;
     ServiceMediaPlay serviceMediaPlay;
     private ImageView image;
-    private RelativeLayout button;
+
     private DisplayMediaFragment displayMediaFragment;
 
 
@@ -94,6 +94,9 @@ private Song song;
         title = mInflater.findViewById(R.id.title);
         artist = mInflater.findViewById(R.id.artist);
         img= mInflater.findViewById(R.id.picture);
+        mTitle= mInflater.findViewById(R.id.song1);
+        mTime=mInflater.findViewById(R.id.Time2);
+        mImageSmall=mInflater.findViewById(R.id.picture_small);
 
         /*   image= (ImageView) mInflater.findViewById(R.id.menu_pop);
         image.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +112,7 @@ private Song song;
 */      mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                displayMediaFragment.onclick();
+                displayMediaFragment.onclick(song);
             }
         });
         return mInflater;
@@ -197,6 +200,7 @@ private Song song;
 
     @Override
     public void onClick(Song song) {
+        this.song = song;
         Log.d("HoangCV", "onClick: 123");
         if (mLinearLayout.getVisibility() == View.GONE) {
             mLinearLayout.setVisibility(View.VISIBLE);
@@ -240,9 +244,15 @@ private Song song;
         }
     }
 */
-   public  void onclickBottom(){
 
-   }}
+
+    @Override
+    public void onclick(Song song) {
+        mTitle.setText(song.getTitle());
+        mTime.setText(song.getArtist());
+        mImageSmall.setImageURI(queryAlbumUri(song.getAlbum()));
+    }
+}
 
 
 

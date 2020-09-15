@@ -3,6 +3,7 @@ package com.out.activitymusic;
 import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.ComponentName;
@@ -24,20 +25,23 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import Service.ServiceMediaPlay;
 
-public class MainActivity extends AppCompatActivity  implements DisplayMediaFragment/*implements ItemClickListener */{
+public class MainActivity extends AppCompatActivity implements DisplayMediaFragment/*implements ItemClickListener */ {
     AllSongsFragment allSongsFragment;
     private ServiceMediaPlay player;
     boolean serviceBound = false;
     private Song song;
-    private TextView mTitle,mTime2;
+    private TextView mTitle, mTime2;
     private ImageView mPictureSmall;
     private ListAdapter adapter;
     private ImageView image;
+    private DataFragment dataFragment;
+
     private DisplayMediaFragment displayMediaFragment;
 
     private ServiceConnection serviceConnection = new ServiceConnection() {
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity  implements DisplayMediaFrag
             serviceBound = false;
         }
     };
-
+    private RelativeLayout mLinearLayout;
 
 
     private void playAudio(String media) {
@@ -71,13 +75,14 @@ public class MainActivity extends AppCompatActivity  implements DisplayMediaFrag
             //Send media with BroadcastReceiver
         }
     }
-  // Gọi playAudio()hàm từ phương thức Activitys onCreate()và tham chiếu tệp âm thanh.
- //   playAudio("https://upload.wikimedia.org/wikipedia/commons/6/6c/Grieg_Lyric_Pieces_Kobold.ogg");
-  @Override
-  public void onSaveInstanceState(Bundle savedInstanceState) {
-      savedInstanceState.putBoolean("ServiceState", serviceBound);
-      super.onSaveInstanceState(savedInstanceState);
-  }
+
+    // Gọi playAudio()hàm từ phương thức Activitys onCreate()và tham chiếu tệp âm thanh.
+    //   playAudio("https://upload.wikimedia.org/wikipedia/commons/6/6c/Grieg_Lyric_Pieces_Kobold.ogg");
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean("ServiceState", serviceBound);
+        super.onSaveInstanceState(savedInstanceState);
+    }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -95,21 +100,27 @@ public class MainActivity extends AppCompatActivity  implements DisplayMediaFrag
         }
     }
 
-    public void setSong(Song songs){
-        this.song=songs;
+    public void setSong(Song songs) {
+        this.song = songs;
     }
 
-    public void FileSong(Song song){
-         song.getFile();
-}
+    public void FileSong(Song song) {
+        song.getFile();
+    }
+
+//    public MainActivity(DataFragment dataFragment) {
+//        this.dataFragment = dataFragment;
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        allSongsFragment=new AllSongsFragment(this);
-        mTitle= findViewById(R.id.song1);
+        allSongsFragment = new AllSongsFragment(this);
+        mTitle = findViewById(R.id.song1);
         mTime2 = findViewById(R.id.Time2);
-        mPictureSmall= findViewById(R.id.picture_small);
+        mPictureSmall = findViewById(R.id.picture_small);
+        mLinearLayout = findViewById(R.id.bottom);
 
         //final ListView list = findViewById(R.id.list_view);
         int orientation = this.getResources().getConfiguration().orientation;
@@ -136,20 +147,25 @@ public class MainActivity extends AppCompatActivity  implements DisplayMediaFrag
 
                     .commit();
         }
-       /* Log.d("HoangCV", "onCreateView: "+song.getTitle());*/
+        /* Log.d("HoangCV", "onCreateView: "+song.getTitle());*/
 
     /*    Intent intent= new Intent(this, ServiceMediaPlay.class);
         bindService(intent,serviceConection,BIND_AUTO_CREATE);
         if(savedInstanceState!=null) {
             allSongsFragment.setService((ServiceMediaPlay) serviceConection);*/
 
-
+//        mLinearLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//             //   dataFragment.onclick(song);
+//            }
+//        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater= getMenuInflater();
-        inflater.inflate(R.menu.menu_bar,menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_bar, menu);
         return true;
     }
 
@@ -160,25 +176,15 @@ public class MainActivity extends AppCompatActivity  implements DisplayMediaFrag
     }
 
     @Override
-    public void onclick() {
-        MediaPlaybackFragment mediaPlaybackFragment = new MediaPlaybackFragment();
+    public void onclick(Song song) {
+        Fragment mediaPlaybackFragment = new MediaPlaybackFragment().newInstance(song);
         FragmentManager manager1 = this.getSupportFragmentManager();
-
         manager1.beginTransaction()
                 .replace(R.id.fragmentSongOne, mediaPlaybackFragment)
-
                 .commit();
- /*   mTitle.setText(song.getTitle());
-    mTime2.setText(song.getDuration());
-    mPictureSmall.setImageURI(queryAlbumUri(song.getAlbum()));
-     Log.d("HoangCV", "onclick: ogd"+ song.getTitle());*/
-    }
-    public Uri queryAlbumUri(String imgUri) {
 
-        final Uri artworkUri = Uri.parse("content://media/external/audio/albumart");
-        return ContentUris.withAppendedId(artworkUri, Long.parseLong(imgUri));//noi them mSrcImageSong vao artworkUri
     }
-
+  
  /*   @Override
     public void onClick(Song song) {
 
