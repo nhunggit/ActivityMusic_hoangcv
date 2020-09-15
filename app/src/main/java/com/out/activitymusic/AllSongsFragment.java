@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -33,12 +37,12 @@ import Service.ServiceMediaPlay;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, ItemClickListener {
+public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, ItemClickListener/*, PopupMenu.OnMenuItemClickListener*/ {
     private static final String SHARED_PREFERENCES_NAME = "1";
     private ListAdapter mListAdapter;
 
     private RecyclerView mRecyclerView;
-
+private Song song;
     private ArrayList<Song> arrayList;
     private RelativeLayout mLinearLayout,mBottom;
     TextView title;
@@ -47,6 +51,11 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     private SharedPreferences mSharePreferences;
     ArrayList<Song> songs;
     ServiceMediaPlay serviceMediaPlay;
+    private ImageView image;
+    private RelativeLayout button;
+    private DisplayMediaFragment displayMediaFragment;
+
+
     public void setService(ServiceMediaPlay service){
             this.serviceMediaPlay=service;
     }
@@ -66,9 +75,15 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
            super.onAttach(context);
        }
    */
+    public AllSongsFragment(DisplayMediaFragment displayMediaFragment){
+        this.displayMediaFragment=displayMediaFragment;
+    }
+    public AllSongsFragment(){
+
+    }
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d("nhungltk", "onCreateView: ");
         View mInflater = inflater.inflate(R.layout.allsongsfragment, container, false);
         mRecyclerView = mInflater.findViewById(R.id.recycle_view);
@@ -80,7 +95,23 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         artist = mInflater.findViewById(R.id.artist);
         img= mInflater.findViewById(R.id.picture);
 
+        /*   image= (ImageView) mInflater.findViewById(R.id.menu_pop);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(getContext(),v);
+                popup.setOnMenuItemClickListener((PopupMenu.OnMenuItemClickListener) container);
+                popup.inflate(R.menu.poupup_menu);
+                popup.show();
+            }
+        });
 
+*/      mLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayMediaFragment.onclick();
+            }
+        });
         return mInflater;
     }
 
@@ -181,11 +212,39 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         final Uri artworkUri = Uri.parse("content://media/external/audio/albumart");
         return ContentUris.withAppendedId(artworkUri, Long.parseLong(imgUri));//noi them mSrcImageSong vao artworkUri
     }
+   /* @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+
+        Toast.makeText(getContext(), "Selected Item: " +menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+        switch (menuItem.getItemId()) {
+            case R.id.search_item:
+                // do your code
+                return true;
+            case R.id.upload_item:
+                // do your code
+                return true;
+            case R.id.copy_item:
+                // do your code
+                return true;
+            case R.id.print_item:
+                // do your code
+                return true;
+            case R.id.share_item:
+                // do your code
+                return true;
+            case R.id.bookmark_item:
+                // do your code
+                return true;
+            default:
+                return false;
+        }
+    }
+*/
+   public  void onclickBottom(){
+
+   }}
 
 
-
-    
-}
 
 
 

@@ -24,35 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import javax.xml.datatype.Duration;
 
 import Service.ServiceMediaPlay;
-/*class RecyclerViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
-    public TextView music;
-    private ItemClickListener itemClickListener;
-    LinearLayout clickItem;
 
-    public RecyclerViewHolder(@NonNull View itemView) {
-        super(itemView);
-        clickItem = (LinearLayout) itemView.findViewById(R.id.clickItem);
-
-        itemView.setOnClickListener(this);
-        itemView.setOnLongClickListener(this);
-    }
-
-
-    public void setOnClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
-
-    @Override
-    public void onClick(View view) {
-        itemClickListener.onClick(view, getAdapterPosition(), false);
-
-    }
-
-    @Override
-    public boolean onLongClick(View view) {
-        itemClickListener.onClick(view, getAdapterPosition(), true);
-        return true;
-    }*/
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private ArrayList<Song> mListSong;

@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="70sp"
             android:visibility="gone"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:onClick="onclickBottom">
                 <ImageView
                     android:id="@+id/picture"
                     android:layout_width="100sp"

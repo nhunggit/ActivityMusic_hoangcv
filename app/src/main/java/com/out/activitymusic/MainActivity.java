@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.ComponentName;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -18,16 +20,25 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import Service.ServiceMediaPlay;
 
-public class MainActivity extends AppCompatActivity implements ItemClickListener{
+public class MainActivity extends AppCompatActivity  implements DisplayMediaFragment/*implements ItemClickListener */{
     AllSongsFragment allSongsFragment;
     private ServiceMediaPlay player;
     boolean serviceBound = false;
     private Song song;
+    private TextView mTitle,mTime2;
+    private ImageView mPictureSmall;
     private ListAdapter adapter;
+    private ImageView image;
+    private DisplayMediaFragment displayMediaFragment;
 
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
@@ -45,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
             serviceBound = false;
         }
     };
+
+
+
     private void playAudio(String media) {
         //Check is service is active
         if (!serviceBound) {
@@ -92,18 +106,22 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        allSongsFragment=new AllSongsFragment();
+        allSongsFragment=new AllSongsFragment(this);
+        mTitle= findViewById(R.id.song1);
+        mTime2 = findViewById(R.id.Time2);
+        mPictureSmall= findViewById(R.id.picture_small);
+
         //final ListView list = findViewById(R.id.list_view);
         int orientation = this.getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            AllSongsFragment allSongsFragment = new AllSongsFragment();
+            AllSongsFragment allSongsFragment = new AllSongsFragment(this);
             FragmentManager manager = this.getSupportFragmentManager();
 
             manager.beginTransaction()
                     .replace(R.id.fragmentSongOne, allSongsFragment)
                     .commit();
         } else {
-            AllSongsFragment allSongsFragment = new AllSongsFragment();
+            AllSongsFragment allSongsFragment = new AllSongsFragment(this);
             FragmentManager manager = this.getSupportFragmentManager();
 
             manager.beginTransaction()
@@ -118,15 +136,15 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
 
                     .commit();
         }
-
-
+       /* Log.d("HoangCV", "onCreateView: "+song.getTitle());*/
 
     /*    Intent intent= new Intent(this, ServiceMediaPlay.class);
         bindService(intent,serviceConection,BIND_AUTO_CREATE);
         if(savedInstanceState!=null) {
             allSongsFragment.setService((ServiceMediaPlay) serviceConection);*/
-        }
 
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -141,12 +159,32 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
+    public void onclick() {
+        MediaPlaybackFragment mediaPlaybackFragment = new MediaPlaybackFragment();
+        FragmentManager manager1 = this.getSupportFragmentManager();
+
+        manager1.beginTransaction()
+                .replace(R.id.fragmentSongOne, mediaPlaybackFragment)
+
+                .commit();
+ /*   mTitle.setText(song.getTitle());
+    mTime2.setText(song.getDuration());
+    mPictureSmall.setImageURI(queryAlbumUri(song.getAlbum()));
+     Log.d("HoangCV", "onclick: ogd"+ song.getTitle());*/
+    }
+    public Uri queryAlbumUri(String imgUri) {
+
+        final Uri artworkUri = Uri.parse("content://media/external/audio/albumart");
+        return ContentUris.withAppendedId(artworkUri, Long.parseLong(imgUri));//noi them mSrcImageSong vao artworkUri
+    }
+
+ /*   @Override
     public void onClick(Song song) {
 
     }
 
+*/
 
 
   /*  @Override
