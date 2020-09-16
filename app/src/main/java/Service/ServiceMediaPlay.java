@@ -10,6 +10,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import androidx.annotation.Nullable;
 import com.out.activitymusic.Song;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ServiceMediaPlay extends Service implements MediaPlayer.OnCompletionListener,
         MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnSeekCompleteListener,
@@ -31,7 +33,6 @@ public class ServiceMediaPlay extends Service implements MediaPlayer.OnCompletio
     private int resumePosition;
     private AudioManager audioManager;
     private final IBinder iBinder = new LocalBinder();
-    private Song song;
 
     @Override
     public void onCreate() {
@@ -42,6 +43,7 @@ public class ServiceMediaPlay extends Service implements MediaPlayer.OnCompletio
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        //Bkav Nhungltk: khi nao thi nhay vao ham nay?
         try {
             //An audio file is passed to the service through putExtra();
             mediaFile = intent.getExtras().getString("media");
@@ -81,9 +83,6 @@ public class ServiceMediaPlay extends Service implements MediaPlayer.OnCompletio
             mediaPlayer.release();
         }
         removeAudioFocus();
-    }
-    public void setSong(Song songs){
-        this.song=songs;
     }
     public void start(Song song) throws IOException {
 
@@ -182,7 +181,11 @@ public class ServiceMediaPlay extends Service implements MediaPlayer.OnCompletio
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
-        playMedia();
+//        try {
+//           // playMedia();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -218,10 +221,20 @@ public class ServiceMediaPlay extends Service implements MediaPlayer.OnCompletio
         }
         mediaPlayer.prepareAsync();
     }
-    private void playMedia() {
-        if (!mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-        }
+    public void playMedia(Song song) throws IOException {
+        //Bkav Nhungltk: tai sao lai viet nhu nay
+//        if (!mediaPlayer.isPlaying()) {
+//            mediaPlayer.start();
+//        }
+        //Bkav Nhungltk: day la kich ban choi nhac nhe.
+        MediaPlayer mMediaPlayer = new MediaPlayer();
+        Uri uri = Uri.parse(song.getFile());
+        Log.d("nhungltk", "playSong: "+uri);
+        mMediaPlayer.setDataSource(getApplicationContext(), uri);
+        mMediaPlayer.prepare();
+        mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
+        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mMediaPlayer.start();
     }
 
     private void stopMedia() {

@@ -36,16 +36,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private ItemClickListener listener;
     private ListAdapter mListAdapter;
     private RecyclerView mRecyclerView;
-    private ServiceMediaPlay serviceMediaPlay;
     ArrayList<Song> songs;
 
     public ListAdapter(Context context, ArrayList<Song> ListView,ItemClickListener itemClickListener) {
         mInflater = LayoutInflater.from(context);
         this.listener = itemClickListener;
         this.mListSong = ListView;
-    }
-    public void setService(ServiceMediaPlay service){
-        this.serviceMediaPlay=service;
     }
 
     @NonNull
@@ -77,6 +73,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 listener.onClick(mCurrent);
+
               /*  try {
                     serviceMediaPlay.start(mCurrent);
                 } catch (IOException e) {

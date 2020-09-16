@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -97,6 +98,16 @@ private Song song;
         mTitle= mInflater.findViewById(R.id.song1);
         mTime=mInflater.findViewById(R.id.Time2);
         mImageSmall=mInflater.findViewById(R.id.picture_small);
+        //Bkav Nhungltk: doan nay nghia la sao
+        ((MainActivity)getActivity()).setiConnectActivityAndBaseSong(new MainActivity.IConnectActivityAndBaseSong() {
+                                                                         @Override
+                                                                         public void connectActivityAndBaseSong() {
+                                                                             if (((MainActivity) getActivity()).player != null) {
+                                                                                 Log.d("nhungltk", "onCreateView: " + "not null");
+                                                                                 setService((((MainActivity) getActivity()).player));
+                                                                             }
+                                                                         }
+                                                                     });
 
         /*   image= (ImageView) mInflater.findViewById(R.id.menu_pop);
         image.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +167,7 @@ private Song song;
         Song song = new Song(id, title, file, album,artist, duration);
         if (data != null && data.getCount() > 0) {
             data.moveToFirst();
-            while (data.moveToNext()) {
+            do {
                 id++;
                 song.setID(id);
                 song.setTitle(data.getString(data.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)));
@@ -185,12 +196,11 @@ private Song song;
                     editor.putBoolean("create_db", true);
                     editor.commit();
                 }*/
-            }
+            }while (data.moveToNext());
         }
         mListAdapter = new ListAdapter(getContext(), songs, this);
         mRecyclerView.setAdapter(mListAdapter);
         Log.d("nhungltk", "onLoadFinished: " + songs.size());
-        mListAdapter.setService(serviceMediaPlay);
     }
 
     @Override
@@ -204,6 +214,14 @@ private Song song;
         Log.d("HoangCV", "onClick: 123");
         if (mLinearLayout.getVisibility() == View.GONE) {
             mLinearLayout.setVisibility(View.VISIBLE);
+        }
+        if(serviceMediaPlay!=null){
+            Log.d("nhungltk", "onClick: "+"playMusic");
+            try {
+                serviceMediaPlay.playMedia(song);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         title.setText(song.getTitle());
         artist.setText(song.getArtist());
@@ -251,6 +269,12 @@ private Song song;
         mTitle.setText(song.getTitle());
         mTime.setText(song.getArtist());
         mImageSmall.setImageURI(queryAlbumUri(song.getAlbum()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+     // mListAdapter.setService(serviceMediaPlay);
     }
 }
 

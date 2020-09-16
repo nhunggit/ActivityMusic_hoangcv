@@ -33,7 +33,7 @@ import Service.ServiceMediaPlay;
 
 public class MainActivity extends AppCompatActivity implements DisplayMediaFragment/*implements ItemClickListener */ {
     AllSongsFragment allSongsFragment;
-    private ServiceMediaPlay player;
+    public ServiceMediaPlay player;
     boolean serviceBound = false;
     private Song song;
     private TextView mTitle, mTime2;
@@ -50,8 +50,10 @@ public class MainActivity extends AppCompatActivity implements DisplayMediaFragm
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             ServiceMediaPlay.LocalBinder binder = (ServiceMediaPlay.LocalBinder) service;
             player = binder.getService();
+            Log.d("nhungltk", "onServiceConnected: "+player);
+            //Bkav Nhungltk: tai sao lai thuc hien connect o day
+            iConnectActivityAndBaseSong.connectActivityAndBaseSong();
             serviceBound = true;
-
             Toast.makeText(MainActivity.this, "Service Bound", Toast.LENGTH_SHORT).show();
         }
 
@@ -61,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements DisplayMediaFragm
         }
     };
     private RelativeLayout mLinearLayout;
-
 
     private void playAudio(String media) {
         //Check is service is active
@@ -149,10 +150,11 @@ public class MainActivity extends AppCompatActivity implements DisplayMediaFragm
         }
         /* Log.d("HoangCV", "onCreateView: "+song.getTitle());*/
 
-    /*    Intent intent= new Intent(this, ServiceMediaPlay.class);
-        bindService(intent,serviceConection,BIND_AUTO_CREATE);
-        if(savedInstanceState!=null) {
-            allSongsFragment.setService((ServiceMediaPlay) serviceConection);*/
+        Intent intent = new Intent(this, ServiceMediaPlay.class);
+        startService(intent);
+        bindService(intent, serviceConnection, BIND_AUTO_CREATE);
+        if (savedInstanceState != null) {
+            allSongsFragment.setService((ServiceMediaPlay) serviceConnection);
 
 //        mLinearLayout.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -160,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements DisplayMediaFragm
 //             //   dataFragment.onclick(song);
 //            }
 //        });
+        }
     }
 
     @Override
@@ -183,6 +186,14 @@ public class MainActivity extends AppCompatActivity implements DisplayMediaFragm
                 .replace(R.id.fragmentSongOne, mediaPlaybackFragment)
                 .commit();
 
+    }
+    //Bkav Nhungltk
+    interface IConnectActivityAndBaseSong {
+        void connectActivityAndBaseSong();
+    }
+    private IConnectActivityAndBaseSong iConnectActivityAndBaseSong;
+    public void setiConnectActivityAndBaseSong(IConnectActivityAndBaseSong iConnectActivityAndBaseSong) {
+        this.iConnectActivityAndBaseSong = iConnectActivityAndBaseSong;
     }
   
  /*   @Override
